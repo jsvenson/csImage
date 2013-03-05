@@ -117,9 +117,9 @@ class csImage {
         $r2 = $this->height / $max_height;
         
         if ($r1 > $r2)
-            $this->resizeToHeight($max_width);
+            $this->resizeToHeight($min_height);
         else
-            $this->resizeToWidth($max_height);
+            $this->resizeToWidth($min_width);
     }
     
     # resize image and place centered on a canvas of $width and $height with a background of $fillcolor
