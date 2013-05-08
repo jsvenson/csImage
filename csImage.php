@@ -136,7 +136,7 @@ class csImage {
                 hexdec(substr($fillcolor, 4, 2))));
         }
         
-        $this->handleTransparency($im);
+        $this->handleTransparency($im, is_null($fillcolor)); # force transparency if no fill color is given
         imagecopyresampled($im, $this->image, (($width-$this->width)/2), (($height-$this->height)/2), 0, 0, $this->width, $this->height, $this->width, $this->height);
         
         $this->image  = $im;
@@ -157,9 +157,9 @@ class csImage {
         $this->crop($width, $height);
     }
     
-    private function handleTransparency(&$image) {
+    private function handleTransparency(&$image, $force_transparency = false) {
         # check for png and honor alpha channel
-        if ($this->type == IMAGETYPE_PNG) {
+        if ($force_transparency || $this->type == IMAGETYPE_PNG) {
             imagealphablending($image, false);
             $color = imagecolorallocatealpha($image, 0, 0, 0, 127); # transparent black
             imagefill($image, 0, 0, $color);
